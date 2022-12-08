@@ -64,7 +64,7 @@ leave the *VmRead* (2) access right, but it's not so easy to exploit, so I decid
 
 ![Copy handle of process AvastUI.exe]({{ site.url }}/assets/images/hooking-system-calls-in-windows-11-22h2-like-avast-antivirus/copy_handle_avastui.png)
 
-I tried to copy the restricted handle with permissions up to *AllAccess* (1) and surprisingly it worked, although the trick is pretty
+I tried to duplicate the restricted handle with permissions up to *AllAccess* (1) and surprisingly it worked, although the trick is pretty
 trivial. Having received a handle with write permissions, in the case of implementing self-defense based on Ob-Callbacks, nothing restricts
 the attacker from performing destructive actions aimed at the protected process. Because the access check and Ob-Callbacks only happen once
 when the handle is created, and they aren’t involved on subsequent syscalls using acquired handle. Here you can inject, but for the test it
