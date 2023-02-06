@@ -237,12 +237,12 @@ impossible. Although the name of the technique contains only
 still needed there, and this is a bottleneck in our case - Avast intercepts *NtWriteVirtualMemory*, so the technique will not work in its 
 original form. But what if you do not write anything to the remote process, but use the strings existing in it? I got the following idea:
 
-1. Using the handle copying bug, get all access handle to process *AvastUI.exe*;
-2. Find in the process memory (there is a handle and there are no interceptions of such actions) a string representing the path where an 
+1. Find in the process memory (there is a handle and there are no interceptions of such actions) a string representing the path where an 
 attacker can write his module. It seemed to me the most reliable way to look in *PEB* among the environment variables for a string like 
 *"LOCALAPPDATA=C:\Users\User\AppData\Local"*, so this path is definitely writable and the memory will not be accidentally freed at runtime, 
 i.e. the exploit will be more reliable;
-3. Copy module to inject to *C:\Users\User\AppData\Local.dll*;
+2. Copy module to inject to *C:\Users\User\AppData\Local.dll*;
+3. Using the handle copying bug, get all access handle to process *AvastUI.exe*;
 4. Find the address of *kernel32!LoadLibraryA* (for this, thanks to KnownDlls, you don’t even need to read the memory, although we can);
 5. Call *[CreateRemoteThread](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createremotethread)* 
 (it is not intercepted) with procedure address of *LoadLibraryA* and argument - string "C:\Users\User\AppData\Local". Since the path does not 
