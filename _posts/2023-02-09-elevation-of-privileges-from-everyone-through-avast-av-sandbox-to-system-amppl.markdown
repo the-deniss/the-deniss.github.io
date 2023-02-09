@@ -76,12 +76,12 @@ The process and thread DACL are specified by `DefaultDACL` of the primary token 
 developers usually do not need to configure it themselves (many people do not even know about its existence). When creating a restricted token the `DefaultDACL` is 
 simply copied from a primary token, and in the case of the `AvastSvc` service it is quite strict by default and contains literally 2 ACEs:
 
-![Restricted token default DefaultDACL]({{ site.url }}/assets/images/elevation-of-privileges-from-everyone-through-avast-av-sandbox-to-system-amppl/restrictedtoken_default_DefaultDACL.png)
+![Restricted token default DefaultDACL]({{ site.url }}/assets/images/elevation-of-privileges-from-everyone-through-avast-av-sandbox-to-system-amppl/restrictedtoken_default_defaultdacl.png)
 
 Only "NT AUTHORITY\SYSTEM" and "BUILTIN\Administrators" access is allowed, and for Administrators this is not full access. But then for some reason the developers 
 themselves create the maximum permissive DACL and set it to the restricted token:
 
-![Set permissive DefaultDACL to the restricted token]({{ site.url }}/assets/images/elevation-of-privileges-from-everyone-through-avast-av-sandbox-to-system-amppl/set_restrictedtoken_permissive_DefaultDACL.png)
+![Set permissive DefaultDACL to the restricted token]({{ site.url }}/assets/images/elevation-of-privileges-from-everyone-through-avast-av-sandbox-to-system-amppl/set_restrictedtoken_permissive_defaultdacl.png)
 
 The comment in the code highlights in the SDDL format the value of the security descriptor used in runtime: Full Access for "Everyone", "Anonymous Logon" and 
 "All Application Packages". This actually explains why the `aswEngSrv.exe` process has such a DACL.
