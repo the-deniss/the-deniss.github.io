@@ -51,7 +51,7 @@ delete operations - thus they are out-of-scope attacker’s tools). But if attem
 continues to realize own algorithm. So this mitigation is optional because attacker can simply set deny `FILE_ADD_FILE` ACE for SYSTEM on 
 the parent directory `(1)`.
 
-![QuarantineExploit 1]({{ site.url }}/assets/images/avast-privileged-arbitrary-file-create-on-quarantine/QuarantineExploit_1.png)
+![QuarantineExploit 1]({{ site.url }}/assets/images/avast-privileged-arbitrary-file-create-on-quarantine/QuarantineExploit_Trace1.png)
 
 Then AV main service checks the entire path to virus for any types of links `(5)`, converts the path to path without links, and only next 
 deletes the file. AV service makes these actions to mitigate file redirection attacks. But without successfully created file with random 
