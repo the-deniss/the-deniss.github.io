@@ -1,8 +1,11 @@
 ---
-layout: post
 title:  "Elevation of privileges from Everyone through Avast Sandbox to System AmPPL (CVE-2021-45335, CVE-2021-45336 and CVE-2021-45337)"
 date:   2023-02-09 11:00:00 +0300
 categories: posts
+excerpt: >-
+  Today we'll talk about how by adding AV engine sandbox you can open a new attack path and, as a result, let the attacker through the chain of vulnerabilities 
+  (CVE-2021-45335, CVE-2021-45336 and CVE-2021-45337) elevate privileges from normal user to SYSTEM with AmPPL protection level
+permalink: /posts/2023/02/09/elevation-of-privileges-from-everyone-through-avast-av-sandbox-to-system-amppl.html
 ---
 
 # 0x00: Introduction
@@ -322,7 +325,7 @@ AmPPL protection level:
 flag, overwrite the `EntryPoint` with your own code and continue the process execution;
 4. Now the code is executed in the "NT AUTHORITY\SYSTEM" context inside the AmPPL-protected `wsc_proxy.exe` process.
 
-Below is a demo video of the exploitation (in the end the input and output of the `powercar.ps1` were slightly out of sync but I hope this does not interfere to understand the 
+Below is a demo video of the exploitation (in the end the input and output of the `powercat.ps1` were slightly out of sync but I hope this does not interfere to understand the 
 main idea):
 
 <video id="SandboxScheduleSystemAmPplProcessExploitDemo" preload="none" width="740" height="480" poster="{{ site.url }}/assets/poster/SandboxScheduleSystemAmPplProcessExploit_Demo.png" controls>

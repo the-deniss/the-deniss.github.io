@@ -1,11 +1,14 @@
 ---
-layout: post
 title:  "Avast Anti-Virus privileged arbitrary file create on virus quarantine (CVE-2023-1585 and CVE-2023-1587)"
 date:   2023-04-26 13:00:00 +0300
 categories: posts
+excerpt: >-
+  In this post we'll talk about how when Avast quarantined your malware you could gain SYSTEM privileges and execute arbitrary code! 
+  Technical analysis of the exploit chain CVE-2023-1585 and CVE-2023-1587
+permalink: /posts/2023/04/26/avast-privileged-arbitrary-file-create-on-quarantine.html
 ---
 
-# 0x00: Introduction
+## 0x00: Introduction
 
 I'm not a big fan of [privileged file operation abuse](https://offsec.almond.consulting/intro-to-file-operation-abuse-on-Windows.html), 
 because such vulnerabilities are usually quite trivial. But there are attack surfaces where you really want to find a vulnerability - 
@@ -22,7 +25,7 @@ My end goal was to execute code in the SYSTEM context as a result of abuse the m
 seem like a cakewalk at first – that would be more interesting! Below is the report "as-is" I sent to the Avast development team to fix 
 the vulnerabilities found.
 
-# 0x01: High-level overview of the vulnerability and the possible effect of using it
+## 0x01: High-level overview of the vulnerability and the possible effect of using it
 
 Avast Anti-Virus since ver. 22.3.6008 (I didn’t check previous versions, but it is very likely that they are also vulnerable), when a 
 file virus is detected, deletes the file in the context of the SYSTEM account. To mitigate file redirection attacks, it checks the entire 
@@ -41,7 +44,7 @@ Such privileged `CopyFile()` gadget obviously leads to arbitrary file write and 
 issue has been assigned [CVE-2023-1587](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2023-1587), other problems have been classified 
 as weird behavior.
 
-# 0x02: Root Cause Analysis
+## 0x02: Root Cause Analysis
 
 On file virus `(2)` detecting Avast Anti-Virus (AV) removes the file in the context of the SYSTEM account. This is quite dangerous since by 
 manipulating links in a controlled path attacker can provoke a situation where anti-virus service deletes the wrong file. Avast’s 
@@ -122,7 +125,7 @@ links `"\RPC Control\config.ori" -> "??\C:\Users\User\Desktop\PoC\pwn.txt"`, `"\
 5.	Call `Proc58` of RPC-interface `"[aswAavm]"` to trigger execution privileged `CopyFile()` in `"C:\ProgramData\Avast Software\Avast\fw"` directory;
 6.	Make sure `"C:\Windows\System32\aadjcsp.dll"` was successfully replaced.
 
-# 0x03: Proof-of-Concept
+## 0x03: Proof-of-Concept
 
 The full source code of the PoC can be found on my [github](https://github.com/the-deniss/Vulnerability-Disclosures/tree/main/CVE-2023-1585%20%26%20CVE-2023-1587/).
 
@@ -133,8 +136,10 @@ Steps to reproduce:
 ```
 rundll32 .\AswQuarantineFileExploit.dll,Exploit C:\Users\User\Desktop\PoC\pwn.txt C:\Windows\System32\aadjcsp.dll
 ```
-The exploit can as well create file if it does not exist and overwrite files owned by `TrustedInstaller` and accessible only for `READ` for SYSTEM account.
 3.	Make sure file passed as 2nd argument was successfully replaced with file passed as 1st argument.
+
+*Note:* The exploit can as well create file if it does not exist and overwrite files owned by `TrustedInstaller` and accessible only for `READ` for SYSTEM account.
+{: .notice--info}
 
 And below is demo of the PoC:
 
@@ -143,13 +148,13 @@ And below is demo of the PoC:
     <p>Your browser doesn't support HTML video. Here is a <a href="{{ site.url }}/assets/videos/AswQuarantineFileExploit_demo.mp4">link to the video</a> instead.</p>
 </video>
 
-*Note: It’s worth noting that PoC code is adapted for Avast Free Antivirus 22.5.6015 (build 22.5.7263.728). This is important, because the exploit intensively 
-uses RPC interfaces, and the layout of the RPC interface may change slightly between Product versions.*
+*Note:* It’s worth noting that PoC code is adapted for Avast Free Antivirus 22.5.6015 (build 22.5.7263.728). This is important, because the exploit intensively uses RPC interfaces, and the layout of the RPC interface may change slightly between Product versions.
+{: .notice--warning}
 
 Getting code execution as SYSTEM from arbitrary file write primitive is quite trivial (e.g. you can use that 
 [trick](https://github.com/blackarrowsec/redteam-research/tree/master/LPE via StorSvc)), so this step is not implemented in the PoC and is not covered in this report.
 
-# 0x04: Disclosure Timeline
+## 0x04: Disclosure Timeline
 
 - 25-06-2022
 Initial report sent to Avast.

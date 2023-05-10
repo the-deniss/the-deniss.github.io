@@ -1,8 +1,11 @@
 ---
-layout: post
 title:  "Hooking System Calls in Windows 11 22H2 like Avast Antivirus. Research, analysis and bypass"
 date:   2022-12-08 11:00:00 +0300
 categories: posts
+excerpt: >-
+  In this post I'll show Avast self-defense bypass: how I discovered a new undocumented way to intercept all system calls without 
+  a hypervisor and PatchGuard triggered BSOD, and, finally, based on the knowledge gained, implemented a bypass
+permalink: /posts/2022/12/08/hooking-system-calls-in-windows-11-22h2-like-avast-antivirus.html
 ---
 
 # 0x00: Introduction
