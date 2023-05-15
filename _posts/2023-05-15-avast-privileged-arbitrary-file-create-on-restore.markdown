@@ -1,6 +1,6 @@
 ---
 title:  "Avast Anti-Virus privileged arbitrary file create on virus restore (CVE-2023-1586)"
-date:   2023-05-15 12:30:00 +0300
+date:   2023-05-15 10:30:00 +0300
 categories: posts
 excerpt: >-
   And today I'm sharing the report describing the vulnerability (CVE-2023-1586) in Avast file restore functionality and exploitation 
