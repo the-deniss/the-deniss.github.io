@@ -138,7 +138,7 @@ rundll32 .\AswQuarantineFileExploit.dll,Exploit C:\Users\User\Desktop\PoC\pwn.tx
 ```
 3.	Make sure file passed as 2nd argument was successfully replaced with file passed as 1st argument.
 
-*Note:* The exploit can as well create file if it does not exist and overwrite files owned by `TrustedInstaller` and accessible only for `READ` for SYSTEM account.
+**Note:** The exploit can as well create file if it does not exist and overwrite files owned by `TrustedInstaller` and accessible only for `READ` for SYSTEM account.
 {: .notice--info}
 
 And below is demo of the PoC:
@@ -148,7 +148,7 @@ And below is demo of the PoC:
     <p>Your browser doesn't support HTML video. Here is a <a href="{{ site.url }}/assets/videos/AswQuarantineFileExploit_demo.mp4">link to the video</a> instead.</p>
 </video>
 
-*Note:* It’s worth noting that PoC code is adapted for Avast Free Antivirus 22.5.6015 (build 22.5.7263.728). This is important, because the exploit intensively uses RPC interfaces, and the layout of the RPC interface may change slightly between Product versions.
+**Note:** It’s worth noting that PoC code is adapted for Avast Free Antivirus 22.5.6015 (build 22.5.7263.728). This is important, because the exploit intensively uses RPC interfaces, and the layout of the RPC interface may change slightly between Product versions.
 {: .notice--warning}
 
 Getting code execution as SYSTEM from arbitrary file write primitive is quite trivial (e.g. you can use that 
